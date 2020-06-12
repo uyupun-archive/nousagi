@@ -17,10 +17,8 @@ const Top = () => {
 
   useEffect(() => {
     if (navigator.geolocation) {
-      //Geolocation APIを利用できる環境向けの処理
       setIsGeolocation(true);
     } else {
-      //Geolocation APIを利用できない環境向けの処理
       setIsGeolocation(false);
     }
   }, []);
@@ -28,13 +26,10 @@ const Top = () => {
   if (!isGeolocation) return <Fragment/>;
 
   const start = () => {
-    console.log("Start!!!");
-    if (isGeolocation) {
-      setDisabled(true);
-      // navigator.geolocation.getCurrentPosition(success, fail);
-      const watchId = navigator.geolocation.watchPosition(success, fail);
-      setWatchId(watchId);
-    }
+    if (!isGeolocation) return;
+    setDisabled(true);
+    const watchId = navigator.geolocation.watchPosition(success, fail);
+    setWatchId(watchId);
   };
 
   const stop = () => {
@@ -43,7 +38,6 @@ const Top = () => {
   };
 
   const success = (pos: any) => {
-    console.log(pos);
     setLatitudes(pushValue(latitudesRef.current, pos.coords.latitude));
     setLongitudes(pushValue(longitudesRef.current, pos.coords.longitude));
   };
@@ -52,9 +46,9 @@ const Top = () => {
     console.error(error);
     const errorMessage: any = {
       0: "原因不明のエラーが発生しました" ,
-      1: "位置情報の取得が許可されませんでした" ,
-      2: "電波状況などで位置情報が取得できませんでした" ,
-      3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました"
+      1: "位置情報の取得が許可されていません" ,
+      2: "電波状況等の影響で位置情報が取得できませんでした" ,
+      3: "位置情報の取得がタイムアウトしました"
     } ;
     alert(errorMessage[error.code]);
   };
@@ -72,12 +66,40 @@ const Top = () => {
   };
 
   return <div>
-    <h1>nousagi</h1>
-    <button className="btn btn-primary" onClick={() => start()} disabled={disabled}>Start!!!</button>
-    <button className="btn btn-primary" onClick={() => stop()} disabled={!disabled}>Stop!!!</button>
-    {
-      showLocations()
-    }
+    <h1 className="text-center">nousagi</h1>
+    <div className="form-group row justify-content-center">
+      <button className="btn btn-primary ml-1 mr-1" onClick={() => start()} disabled={disabled}>START</button>
+      <button className="btn btn-primary ml-1 mr-1" onClick={() => stop()} disabled={!disabled}>STOP</button>
+    </div>
+
+    <div className="ml-2 mr-2">
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <a href="#speed" className="nav-link active" data-toggle="tab">Speed</a>
+        </li>
+        <li className="nav-item">
+          <a href="#geo" className="nav-link" data-toggle="tab">Geo</a>
+        </li>
+        <li className="nav-item">
+          <a href="#map" className="nav-link" data-toggle="tab">Map</a>
+        </li>
+      </ul>
+
+      <div className="tab-content">
+        <div id="speed" className="tab-pane active">
+          <p>speed</p>
+          {
+            showLocations()
+          }
+        </div>
+        <div id="geo" className="tab-pane">
+          <p>geo</p>
+        </div>
+        <div id="map" className="tab-pane">
+          <p>map</p>
+        </div>
+      </div>
+    </div>
   </div>;
 };
 
