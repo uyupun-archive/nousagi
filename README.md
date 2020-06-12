@@ -1,6 +1,6 @@
 # nousagi
 
-🐰 geolocation integration tool 🥕
+🐰 geolocation tracking tool 🥕
 
 ```bash
 $ yarn install
