@@ -39,6 +39,7 @@ const Top = () => {
 
   const stop = () => {
     navigator.geolocation.clearWatch(watchId);
+    setDisabled(false);
   };
 
   const success = (pos: any) => {
@@ -49,6 +50,13 @@ const Top = () => {
 
   const fail = (error: any) => {
     console.error(error);
+    const errorMessage: any = {
+      0: "原因不明のエラーが発生しました" ,
+      1: "位置情報の取得が許可されませんでした" ,
+      2: "電波状況などで位置情報が取得できませんでした" ,
+      3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました"
+    } ;
+    alert(errorMessage[error.code]);
   };
 
   const pushValue = (array: any[], value: any) => {
