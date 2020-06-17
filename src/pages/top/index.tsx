@@ -67,9 +67,9 @@ const Top = () => {
 
   return <div>
     <h1 className="text-center">nousagi</h1>
-    <div className="form-group row justify-content-center">
-      <button className="btn btn-primary ml-1 mr-1" onClick={() => start()} disabled={disabled}>START</button>
-      <button className="btn btn-primary ml-1 mr-1" onClick={() => stop()} disabled={!disabled}>STOP</button>
+    <div className="d-flex justify-content-center mb-3">
+      <button className="btn btn-primary mx-1" onClick={() => start()} disabled={disabled}>START</button>
+      <button className="btn btn-primary mx-1" onClick={() => stop()} disabled={!disabled}>STOP</button>
     </div>
 
     <div className="ml-2 mr-2">
